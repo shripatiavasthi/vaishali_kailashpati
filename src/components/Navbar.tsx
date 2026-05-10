@@ -5,9 +5,14 @@ import { cn } from '@/src/lib/utils';
 
 import { Link } from 'react-router-dom';
 
+const WHATSAPP_NUMBER = '919999958813';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const quoteUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    'Hello Kailashpati Enterprises, I would like to request a quotation.'
+  )}`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,7 +90,9 @@ const Navbar = () => {
                 <Search size={20} />
               </button>
               <a 
-                href="#enquiry" 
+                href={quoteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-industrial-accent text-white px-5 py-2.5 rounded font-semibold text-sm transition-transform active:scale-95 shadow-lg shadow-blue-500/20"
               >
                 GET QUOTE
@@ -130,7 +137,9 @@ const Navbar = () => {
               ))}
               <div className="pt-4 px-3 flex flex-col gap-4">
                 <a 
-                  href="#enquiry" 
+                  href={quoteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
                   className="bg-industrial-accent text-white py-3 rounded text-center font-bold tracking-wide"
                 >

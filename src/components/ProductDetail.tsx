@@ -6,11 +6,18 @@ import { ArrowLeft, CheckCircle2, FileText, Settings, ShieldCheck } from 'lucide
 import Navbar from './Navbar';
 import Footer from './Footer';
 
+const WHATSAPP_NUMBER = '919999958813';
+
 const ProductDetail = () => {
   const { id } = useParams();
   const product = PRODUCT_CATEGORIES.find(p => p.id === id);
 
   if (!product) return <div>Product Not Found</div>;
+
+  const quotationMessage = encodeURIComponent(
+    `Hello Kailashpati Enterprises, I would like to request a quotation for ${product.title}.`
+  );
+  const quotationUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${quotationMessage}`;
 
   return (
     <div className="min-h-screen bg-industrial-gray pt-24">
@@ -76,7 +83,9 @@ const ProductDetail = () => {
 
             <div className="pt-6 flex flex-col sm:flex-row gap-4">
                <a 
-                href="/#contact"
+                href={quotationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex-1 bg-industrial-accent hover:bg-industrial-accent/90 text-white text-center py-5 rounded-xl font-bold shadow-lg shadow-blue-500/20"
                >
                  REQUEST QUOTATION

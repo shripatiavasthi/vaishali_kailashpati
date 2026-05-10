@@ -1,12 +1,12 @@
 export const BRANDS = [
-  { name: "Crompton", logo: "https://images.unsplash.com/photo-1611162617474-5b21e873e140?auto=format&fit=crop&q=80&w=200&h=100" },
-  { name: "Siemens", logo: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&q=80&w=200&h=100" },
-  { name: "ABB", logo: "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&q=80&w=200&h=100" },
-  { name: "Bharat Bijlee", logo: "https://images.unsplash.com/photo-1626544823105-df93a58f409c?auto=format&fit=crop&q=80&w=200&h=100" },
-  { name: "Kirloskar", logo: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=200&h=100" },
-  { name: "Bonfiglioli", logo: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=200&h=100" },
-  { name: "SEW", logo: "https://images.unsplash.com/photo-1581092580497-e03e59c9d74a?auto=format&fit=crop&q=80&w=200&h=100" },
-  { name: "Motovario", logo: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&q=80&w=200&h=100" },
+  { name: "Crompton", logo: "/brands/crompton.png" },
+  { name: "Siemens", logo: "/brands/siemens.svg" },
+  { name: "ABB", logo: "/brands/abb.svg" },
+  { name: "Bharat Bijlee", logo: "/brands/bharat-bijlee.jpg" },
+  { name: "Kirloskar", logo: "/brands/kirloskar.svg" },
+  { name: "Bonfiglioli", logo: "/brands/bonfiglioli.svg" },
+  { name: "SEW", logo: "/brands/sew.svg" },
+  { name: "Motovario", logo: "/brands/motovario.png" },
 ];
 
 export const PRODUCT_CATEGORIES = [
@@ -26,7 +26,7 @@ export const PRODUCT_CATEGORIES = [
     id: "vfd",
     title: "VFD / AC Drives",
     description: "Advanced automation drives for precise speed control and energy saving.",
-    image: "https://images.unsplash.com/photo-1581092580497-e03e59c9d74a?auto=format&fit=crop&q=80&w=800",
+    image: "/products/vfd-drive.jpg",
   },
   {
     id: "pumps",
@@ -38,7 +38,7 @@ export const PRODUCT_CATEGORIES = [
     id: "automation",
     title: "Automation Products",
     description: "PLC, HMI, and switchgear components for modern smart factories.",
-    image: "https://images.unsplash.com/photo-1563721300063-447547904037?auto=format&fit=crop&q=80&w=800",
+    image: "/products/automation-control-panel.jpg",
   },
   {
     id: "spares",

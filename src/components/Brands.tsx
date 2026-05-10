@@ -21,13 +21,14 @@ const Brands = () => {
           className="flex items-center gap-16 pr-16"
         >
           {[...BRANDS, ...BRANDS].map((brand, idx) => (
-            <div key={idx} className="flex-shrink-0 flex items-center gap-3">
-              <img 
-                src={brand.logo} 
-                alt={brand.name} 
-                className="h-10 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" 
-              />
-              <span className="text-gray-400 font-bold text-xl font-display">{brand.name}</span>
+            <div key={idx} className="flex-shrink-0">
+              <div className="flex h-12 w-28 items-center justify-center">
+                <img
+                  src={brand.logo}
+                  alt={brand.name}
+                  className="max-h-12 max-w-28 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                />
+              </div>
             </div>
           ))}
         </motion.div>
