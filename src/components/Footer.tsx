@@ -18,7 +18,12 @@ const Footer = () => {
               <a href="#" className="w-10 h-10 bg-white border border-gray-200 rounded flex items-center justify-center text-gray-400 hover:text-industrial-accent transition-colors shadow-sm">
                 <Linkedin size={18} />
               </a>
-              <a href="#" className="w-10 h-10 bg-white border border-gray-200 rounded flex items-center justify-center text-gray-400 hover:text-industrial-accent transition-colors shadow-sm">
+              <a
+                href="https://facebook.com/09aijps9912j1zj"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white border border-gray-200 rounded flex items-center justify-center text-gray-400 hover:text-industrial-accent transition-colors shadow-sm"
+              >
                 <Facebook size={18} />
               </a>
               <a href="#" className="w-10 h-10 bg-white border border-gray-200 rounded flex items-center justify-center text-gray-400 hover:text-industrial-accent transition-colors shadow-sm">
@@ -51,10 +56,14 @@ const Footer = () => {
 
           <div className="space-y-8">
             <h4 className="font-display font-bold text-lg uppercase tracking-widest text-industrial-accent">Resources</h4>
-            <button className="flex items-center gap-3 bg-white border border-gray-200 px-6 py-4 rounded-xl text-sm font-bold shadow-sm hover:shadow-md transition-all w-full justify-center">
+            <a
+              href="/catalogue/kailashpati-catalogue.pdf"
+              download="Kailashpati-Enterprises-Catalogue.pdf"
+              className="flex items-center gap-3 bg-white border border-gray-200 px-6 py-4 rounded-xl text-sm font-bold shadow-sm hover:shadow-md transition-all w-full justify-center"
+            >
               <Download size={18} />
               DOWNLOAD CATALOGUE
-            </button>
+            </a>
             <div className="flex items-center gap-3 text-sm text-gray-500">
                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                System Status: Active Supply
