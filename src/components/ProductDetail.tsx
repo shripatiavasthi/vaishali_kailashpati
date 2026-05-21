@@ -3,8 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { PRODUCT_CATEGORIES } from '@/src/constants/data';
 import { ArrowLeft, CheckCircle2, FileText, Settings, ShieldCheck } from 'lucide-react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 
 const WHATSAPP_NUMBER = '919999958813';
 
@@ -21,7 +19,6 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-industrial-gray pt-24">
-      <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-12">
         <Link to="/" className="inline-flex items-center gap-2 text-industrial-accent font-bold mb-8 hover:translate-x-1 transition-transform">
           <ArrowLeft size={20} />
@@ -97,7 +94,6 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -36,7 +36,7 @@ const Products = () => {
               transition={{ delay: index * 0.1 }}
               className="group cursor-pointer"
             >
-              <Link to={`/product/${category.id}`}>
+              <Link to={category.href ?? `/product/${category.id}`}>
                 <div className="relative h-64 overflow-hidden rounded-t-xl">
                   <img 
                     src={category.image} 
@@ -68,4 +68,3 @@ const Products = () => {
 };
 
 export default Products;
-

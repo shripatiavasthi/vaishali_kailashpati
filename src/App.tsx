@@ -18,6 +18,7 @@ import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import ProductDetail from './components/ProductDetail';
+import ProductCataloguePage from './components/ProductCataloguePage';
 
 function HomePage() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/products/industrial-gearboxes" element={<ProductCataloguePage />} />
           </Routes>
         </main>
         <Footer />
@@ -52,5 +54,4 @@ export default function App() {
     </Router>
   );
 }
-
 
