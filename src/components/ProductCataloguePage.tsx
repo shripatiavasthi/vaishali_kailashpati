@@ -61,6 +61,17 @@ const ProductCataloguePage = () => {
     });
   };
 
+  const openFullscreenImage = (itemId: string, image: string, title: string, imageIndex: number) => {
+    setActiveSlides((current) => ({
+      ...current,
+      [itemId]: imageIndex,
+    }));
+    setFullscreenImage({
+      src: image,
+      alt: `${title} ${imageIndex + 1}`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-industrial-gray pt-24">
       <section className="relative overflow-hidden border-b border-slate-200 bg-slate-950 text-white">
@@ -130,7 +141,7 @@ const ProductCataloguePage = () => {
                       <div className="relative min-h-[280px] md:min-h-[360px]">
                         <button
                           type="button"
-                          onClick={() => setFullscreenImage({ src: activeImage, alt: `${item.title} ${activeIndex + 1}` })}
+                          onClick={() => openFullscreenImage(item.id, activeImage, item.title, activeIndex)}
                           className="absolute inset-0 block focus:outline-none focus-visible:ring-4 focus-visible:ring-white/70"
                           aria-label={`Open fullscreen image for ${item.title}`}
                         >
@@ -176,12 +187,7 @@ const ProductCataloguePage = () => {
                           <button
                             key={image}
                             type="button"
-                            onClick={() =>
-                              setActiveSlides((current) => ({
-                                ...current,
-                                [item.id]: imageIndex,
-                              }))
-                            }
+                            onClick={() => openFullscreenImage(item.id, image, item.title, imageIndex)}
                             aria-label={`Open fullscreen image ${imageIndex + 1} for ${item.title}`}
                             className={`overflow-hidden rounded-2xl bg-white text-left ring-2 transition focus:outline-none focus-visible:ring-4 focus-visible:ring-industrial-accent/40 ${
                               item.images.length === 3 && imageIndex === 0 ? 'col-span-2' : ''
