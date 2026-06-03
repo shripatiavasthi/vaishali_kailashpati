@@ -1,10 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { INDUSTRIAL_PRODUCT_CATALOGUE } from '@/src/constants/data';
 
 const ProductCataloguePage = () => {
+  const [fullscreenImage, setFullscreenImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
+  const [activeSlides, setActiveSlides] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    if (!fullscreenImage) {
+      document.body.style.overflow = '';
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setFullscreenImage(null);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [fullscreenImage]);
+
+  useEffect(() => {
+    const items = INDUSTRIAL_PRODUCT_CATALOGUE.sections.flatMap((section) => section.items);
+
+    const interval = window.setInterval(() => {
+      setActiveSlides((current) => {
+        const next = { ...current };
+
+        items.forEach((item) => {
+          const currentIndex = current[item.id] ?? 0;
+          next[item.id] = (currentIndex + 1) % item.images.length;
+        });
+
+        return next;
+      });
+    }, 2600);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const updateSlide = (itemId: string, imageCount: number, direction: number) => {
+    setActiveSlides((current) => {
+      const currentIndex = current[itemId] ?? 0;
+      return {
+        ...current,
+        [itemId]: (currentIndex + direction + imageCount) % imageCount,
+      };
+    });
+  };
+
   return (
     <div className="min-h-screen bg-industrial-gray pt-24">
       <section className="relative overflow-hidden border-b border-slate-200 bg-slate-950 text-white">
@@ -65,14 +121,46 @@ const ProductCataloguePage = () => {
                     transition={{ delay: itemIndex * 0.08 }}
                     className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
                   >
+                    {(() => {
+                      const activeIndex = activeSlides[item.id] ?? 0;
+                      const activeImage = item.images[activeIndex];
+
+                      return (
                     <div className="grid gap-0 md:grid-cols-[1.25fr_0.95fr]">
                       <div className="relative min-h-[280px] md:min-h-[360px]">
-                        <img
-                          src={item.images[0]}
-                          alt={item.title}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
+                        <button
+                          type="button"
+                          onClick={() => setFullscreenImage({ src: activeImage, alt: `${item.title} ${activeIndex + 1}` })}
+                          className="absolute inset-0 block focus:outline-none focus-visible:ring-4 focus-visible:ring-white/70"
+                          aria-label={`Open fullscreen image for ${item.title}`}
+                        >
+                          <img
+                            src={activeImage}
+                            alt={item.title}
+                            className="h-full w-full object-cover transition duration-300 hover:scale-[1.02]"
+                          />
+                        </button>
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-900/15 to-transparent" />
+                        {item.images.length > 1 ? (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => updateSlide(item.id, item.images.length, -1)}
+                              className="absolute left-4 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-slate-950/45 text-white backdrop-blur transition hover:bg-slate-950/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                              aria-label={`Previous image for ${item.title}`}
+                            >
+                              <ChevronLeft size={18} />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => updateSlide(item.id, item.images.length, 1)}
+                              className="absolute right-4 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-slate-950/45 text-white backdrop-blur transition hover:bg-slate-950/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                              aria-label={`Next image for ${item.title}`}
+                            >
+                              <ChevronRight size={18} />
+                            </button>
+                          </>
+                        ) : null}
                         <div className="absolute inset-x-0 bottom-0 p-6">
                           <h3 className="text-2xl font-display font-bold text-white">
                             {item.title}
@@ -85,19 +173,33 @@ const ProductCataloguePage = () => {
 
                       <div className="grid grid-cols-2 gap-2 bg-slate-100 p-2">
                         {item.images.map((image, imageIndex) => (
-                          <div
+                          <button
                             key={image}
-                            className={`overflow-hidden rounded-2xl bg-white ${item.images.length === 3 && imageIndex === 0 ? 'col-span-2' : ''}`}
+                            type="button"
+                            onClick={() =>
+                              setActiveSlides((current) => ({
+                                ...current,
+                                [item.id]: imageIndex,
+                              }))
+                            }
+                            aria-label={`Open fullscreen image ${imageIndex + 1} for ${item.title}`}
+                            className={`overflow-hidden rounded-2xl bg-white text-left ring-2 transition focus:outline-none focus-visible:ring-4 focus-visible:ring-industrial-accent/40 ${
+                              item.images.length === 3 && imageIndex === 0 ? 'col-span-2' : ''
+                            } ${
+                              imageIndex === activeIndex ? 'ring-industrial-accent' : 'ring-transparent'
+                            }`}
                           >
                             <img
                               src={image}
                               alt={`${item.title} ${imageIndex + 1}`}
-                              className="h-full min-h-[140px] w-full object-cover"
+                              className="h-full min-h-[140px] w-full object-cover transition duration-300 hover:scale-[1.03]"
                             />
-                          </div>
+                          </button>
                         ))}
                       </div>
                     </div>
+                      );
+                    })()}
                   </motion.article>
                 ))}
               </div>
@@ -133,6 +235,32 @@ const ProductCataloguePage = () => {
           </div>
         </div>
       </section>
+
+      {fullscreenImage ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 p-4 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={fullscreenImage.alt}
+          onClick={() => setFullscreenImage(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setFullscreenImage(null)}
+            className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+            aria-label="Close fullscreen image"
+          >
+            <X size={20} />
+          </button>
+
+          <img
+            src={fullscreenImage.src}
+            alt={fullscreenImage.alt}
+            className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

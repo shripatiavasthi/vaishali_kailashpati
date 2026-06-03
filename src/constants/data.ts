@@ -21,6 +21,12 @@ export const PRODUCT_CATEGORIES = [
     title: "Industrial Gearboxes",
     description: "Robust worm, helical, and planetary gearboxes for precise torque transmission.",
     image: "/products/catalog/gearboxes/industrial-helical-gearbox-1.jpeg",
+    images: [
+      "/products/catalog/gearboxes/industrial-helical-gearbox-1.jpeg",
+      "/products/catalog/gearboxes/industrial-helical-gearbox-2.jpeg",
+      "/products/catalog/gearboxes/industrial-helical-gearbox-3.jpeg",
+      "/products/catalog/gearboxes/industrial-helical-gearbox-4.jpeg",
+    ],
     href: "/products/industrial-gearboxes",
   },
   {

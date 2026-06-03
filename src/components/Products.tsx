@@ -1,10 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { PRODUCT_CATEGORIES } from '@/src/constants/data';
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Products = () => {
+  const [activeSlides, setActiveSlides] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const rotatingCategories = PRODUCT_CATEGORIES.filter(
+      (category) => Array.isArray(category.images) && category.images.length > 1
+    );
+
+    if (!rotatingCategories.length) {
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      setActiveSlides((current) => {
+        const next = { ...current };
+
+        rotatingCategories.forEach((category) => {
+          const images = category.images ?? [category.image];
+          const currentIndex = current[category.id] ?? 0;
+          next[category.id] = (currentIndex + 1) % images.length;
+        });
+
+        return next;
+      });
+    }, 2800);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
   return (
     <section id="products" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,12 +66,33 @@ const Products = () => {
             >
               <Link to={category.href ?? `/product/${category.id}`}>
                 <div className="relative h-64 overflow-hidden rounded-t-xl">
-                  <img 
-                    src={category.image} 
-                    alt={category.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                  {(category.images ?? [category.image]).map((image, imageIndex) => (
+                    <img
+                      key={image}
+                      src={image}
+                      alt={category.title}
+                      className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-110 ${
+                        imageIndex === (activeSlides[category.id] ?? 0)
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                      }`}
+                    />
+                  ))}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  {(category.images?.length ?? 0) > 1 ? (
+                    <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+                      {category.images?.map((image, imageIndex) => (
+                        <span
+                          key={image}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            imageIndex === (activeSlides[category.id] ?? 0)
+                              ? 'w-6 bg-white'
+                              : 'w-2 bg-white/45'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
                 
                 <div className="p-8 border border-gray-100 border-t-0 rounded-b-xl shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
