@@ -85,7 +85,7 @@ const Hero = () => {
                    <span className="text-white font-bold text-sm tracking-widest uppercase">Live Project Support</span>
                  </div>
                  <p className="text-white/80 text-sm italic leading-snug">
-                   "Supplying over 500+ motors to the leading chemical plants in Uttar Pradesh this quarter."
+                   "Supplying over 500+ motors to the leading chemical plants in Uttar Pradesh this quarter"
                  </p>
               </div>
             </div>
